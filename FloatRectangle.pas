@@ -49,6 +49,12 @@ type
       { returns the point the identifies the top, right corner of the rectangle }
       function TopRight:   TFloatPoint;
 
+      { returns the width of the rectangle }
+      function Width: Single;
+
+      { returns the height of the rectangle }
+      function Height: Single;
+
       { expands the rectangle by adding a square onto one of its sides
 
         parameters:
@@ -94,6 +100,16 @@ end;
 function TFloatRectangle.TopRight: TFloatPoint;
 begin
   Result := TFloatPoint.Create(m_BottomLeft.X + m_Width, m_BottomLeft.Y + m_Height);
+end;
+
+function TFloatRectangle.Width: Single;
+begin
+  Result := m_Width;
+end;
+
+function TFloatRectangle.Height: Single;
+begin
+  Result := m_Height;
 end;
 
 function TFloatRectangle.Expand(const square: TFloatSquare; const d: TDirection): Boolean;
