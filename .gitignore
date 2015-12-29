@@ -1,0 +1,3 @@
+# object files and ppu files
+*.o
+*.ppu
