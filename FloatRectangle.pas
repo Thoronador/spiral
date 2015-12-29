@@ -101,8 +101,8 @@ begin
   glBegin(GL_LINE_LOOP);
     glVertex2f(m_BottomLeft.X, m_BottomLeft.Y);
     glVertex2f(m_BottomLeft.X + m_Width, m_BottomLeft.Y);
-    glVertex2f(m_BottomLeft.X + m_Width, m_BottomLeft.Y - m_Height);
-    glVertex2f(m_BottomLeft.X, m_BottomLeft.Y - m_Height);
+    glVertex2f(m_BottomLeft.X + m_Width, m_BottomLeft.Y + m_Height);
+    glVertex2f(m_BottomLeft.X, m_BottomLeft.Y + m_Height);
   glEnd;
 end; //proc
 
