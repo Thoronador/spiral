@@ -31,8 +31,14 @@ type
     private
       //nothing yet
     public
+      { constructor }
       constructor Create;
 
+      { draws the spiral
+
+        parameters:
+            n - number of iterations that will be drawn
+      }
       procedure Draw(n: Word);
   end; //class FPoint
 

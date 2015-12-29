@@ -32,11 +32,20 @@ type
     private
       m_x, m_y: Single;
     public
+      { constructor
+
+        parameters:
+            initX - the x coordinate of the point
+            initY - the y coordinate of the point
+      }
       constructor Create(const initX, initY: Single);
 
+      { returns the x coordinate of the point }
       function X: Single;
+
+      { returns the y coordinate of the point }
       function Y: Single;
-  end; //class FPoint
+  end; //class TFloatPoint
 
 implementation
 

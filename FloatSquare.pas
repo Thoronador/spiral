@@ -24,7 +24,7 @@ unit FloatSquare;
 interface
 
 uses
-  Classes, FloatPoint;
+  Classes, GL, FloatPoint;
 
 type
   { class to represent a square in 2D space with floating point coordinates } 
@@ -33,11 +33,25 @@ type
       m_BottomLeft: TFloatPoint;
       m_Length:      Single;
     public
+      { default constructor
+
+        parameters:
+            bottomLeft - the bottom, left point of the square
+            width      - the width (and height) of the square
+      }
       constructor Create(const bottomLeft: TFloatPoint; width: Single);
 
+      { returns the point the identifies the bottom, left corner of the square }
       function BottomLeft: TFloatPoint;
+
+      { returns the point the identifies the top, right corner of the square }
       function TopRight:   TFloatPoint;
+
+      { returns the length of the square }
       function Length:     Single;
+
+      { draws the square (as a simple line strip in OpenGL) }
+      procedure Draw;
   end; //class TFloatSquare
 
 implementation
@@ -67,5 +81,15 @@ function TFloatSquare.Length: Single;
 begin
   Result := m_Length;
 end;
+
+procedure TFloatSquare.Draw;
+begin
+  glBegin(GL_LINE_LOOP);
+    glVertex2f(m_BottomLeft.X, m_BottomLeft.Y);
+    glVertex2f(m_BottomLeft.X + m_Length, m_BottomLeft.Y);
+    glVertex2f(m_BottomLeft.X + m_Length, m_BottomLeft.Y + m_Length);
+    glVertex2f(m_BottomLeft.X, m_BottomLeft.Y + m_Length);
+  glEnd;
+end; //proc
 
 end.

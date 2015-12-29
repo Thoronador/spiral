@@ -30,6 +30,15 @@ type
                 dirSouth, //south
                 dirEast); //east
 
+  { returns a direction that was created by "advancing" the given direction by
+    turning counter-clockwise
+
+    parameters:
+        d - the direction
+
+    return value:
+        Returns the next/advanced direction.
+  }
   function AdvanceDirection(const d: TDirection): TDirection;
 
 implementation

@@ -34,10 +34,34 @@ type
       m_Width:      Single;
       m_Height:     Single;
     public
+      { constructor
+
+        parameters:
+            bottomLeft - position of the bottom, left corner of the rectangle
+            width      - width of the rectangle (i.e. size along x-axis)
+            height     - height of the rectangle (i.e. size along y-axis)
+      }
       constructor Create(const bottomLeft: TFloatPoint; const width, height: Single);
+
+      { returns the point the identifies the bottom, left corner of the rectangle }
       function BottomLeft: TFloatPoint;
+
+      { returns the point the identifies the top, right corner of the rectangle }
       function TopRight:   TFloatPoint;
+
+      { expands the rectangle by adding a square onto one of its sides
+
+        parameters:
+            square - the square that shall be appended
+            d      - direction that indicates where the square shall be appended
+
+        return value:
+            Returns true, if the rectangle was expanded successfully.
+            Returns false, if the square could not be appended to the rectangle.
+      }
       function Expand(const square: TFloatSquare; const d: TDirection): Boolean;
+
+      { draws the rectangle (as a simple line strip in OpenGL) }
       procedure Draw;
   end; //class TFloatRectangle
 
