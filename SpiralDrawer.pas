@@ -55,6 +55,7 @@ begin
 
   BottomLeft := TFloatPoint.Create(0.0, 0.0);
   Rect := TFloatRectangle.Create(BottomLeft, 1, 1);
+  Rect.Draw;
   currentDirection := dirWest;
   for i := 1 to n do
   begin
