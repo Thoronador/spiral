@@ -24,7 +24,7 @@ unit SpiralDrawer;
 interface
 
 uses
-  Classes, Direction, Fibonacci, FloatPoint, FloatRectangle, FloatSquare;
+  Classes, Direction, Fibonacci, FloatPoint, FloatRectangle, FloatSquare, GL;
 
 type
   TSpiralDrawer = class
@@ -54,6 +54,7 @@ var BottomLeft: TFloatPoint;
     currentDirection: TDirection;
     Rect: TFloatRectangle;
     Square: TFloatSquare;
+    sq_size: LongWord;
     i: Word;
 begin
   if (n > 20) then
@@ -65,14 +66,40 @@ begin
   currentDirection := dirWest;
   for i := 1 to n do
   begin
-    Square := TFloatSquare.Create(TFloatPoint.Create(0,0), Fibonacci_iter(i));
+    sq_size := Fibonacci_iter(i);
+    case currentDirection of
+      dirWest: BottomLeft := TFloatPoint.Create(Rect.BottomLeft.X - sq_size,
+                                                Rect.BottomLeft.Y);
+      dirEast: BottomLeft := TFloatPoint.Create(Rect.BottomLeft.X + Rect.Width,
+                                                Rect.BottomLeft.Y);
+      dirNorth: BottomLeft := TFloatPoint.Create(Rect.BottomLeft.X,
+                                                 Rect.BottomLeft.Y + Rect.Height);
+      dirSouth: BottomLeft := TFloatPoint.Create(Rect.BottomLeft.X,
+                                                 Rect.BottomLeft.Y - sq_size);
+    end; //case
+    Square := TFloatSquare.Create(bottomLeft, sq_size);
     if (not Rect.Expand(Square, currentDirection)) then
     begin
       WriteLn('Error: Could not expand rectangle during loop iteration ', i, '!');
       Exit;
     end; //if
     //Draw rectangle
+    glColor3f(1.0, 1.0, 1.0);
     Rect.Draw;
+    //Draw part of "spiral"
+    glBegin(GL_LINES);
+      glColor3f(1.0, 0.0, 0.0);
+      case currentDirection of
+        dirWest, dirEast: begin
+                   glVertex2f(Square.BottomLeft.X, Square.BottomLeft.Y);
+                   glVertex2f(Square.TopRight.X, Square.TopRight.Y);
+                 end;
+        dirSouth, dirNorth: begin
+                   glVertex2f(Square.BottomLeft.X, Square.TopRight.Y);
+                   glVertex2f(Square.TopRight.X, Square.BottomLeft.Y);
+                  end;
+      end; //case
+    glEnd;
     //change direction for next iteration
     currentDirection := AdvanceDirection(currentDirection);
   end; //for
