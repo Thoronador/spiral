@@ -40,6 +40,17 @@ type
             n - number of iterations that will be drawn
       }
       procedure Draw(n: Word);
+
+      { draws an arc
+
+        parameters:
+            center - center of the arc
+            radius - radius of the arc
+            degStart - angle (in degrees) where arc starts
+            degEnd   - angle (in degrees) where arc ends
+            steps    - steps between begin and end
+      }
+      procedure DrawArc(const center: TFloatPoint; const radius, degStart, degEnd: Single; steps: Word);
   end; //class FPoint
 
 implementation
@@ -100,10 +111,44 @@ begin
                   end;
       end; //case
     glEnd;
+    //draw arc
+    glColor3f(0.0, 1.0, 0.0);
+    case currentDirection of
+      dirWest: DrawArc(TFloatPoint.Create(Square.TopRight.X, Square.BottomLeft.Y),
+                       Square.Length, 90, 180, Round(Square.Length*3));
+      dirSouth: DrawArc(TFloatPoint.Create(Square.TopRight.X, Square.TopRight.Y),
+                       Square.Length, 180, 270, Round(Square.Length*3));
+      dirEast: DrawArc(TFloatPoint.Create(Square.BottomLeft.X, Square.TopRight.Y),
+                       Square.Length, 270, 360, Round(Square.Length*3));
+      dirNorth: DrawArc(TFloatPoint.Create(Square.BottomLeft.X, Square.BottomLeft.Y),
+                       Square.Length, 0, 90, Round(Square.Length*3));
+    end; //case
     //change direction for next iteration
     currentDirection := AdvanceDirection(currentDirection);
   end; //for
 end;
+
+procedure TSpiralDrawer.DrawArc(const center: TFloatPoint; const radius, degStart, degEnd: Single; steps: Word);
+var i: Word;
+    anglePerStep: Single;
+    angleRadiant: Single;
+begin
+  if (steps < 1) then
+    steps := 1;
+
+  if (degStart = degEnd) or (radius <= 0.0) then
+    Exit;
+
+  anglePerStep := (degEnd - degStart) / steps;
+
+  glBegin(GL_LINE_STRIP);
+  for i := 0 to steps do
+  begin
+    angleRadiant := (degStart+i*anglePerStep) / 180.0 * Pi;
+    glVertex2f(center.x + radius * cos(angleRadiant), center.y + radius * sin(angleRadiant));
+  end; //for
+  glEnd;
+end; //func
 
 end.
 
