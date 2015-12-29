@@ -24,9 +24,9 @@ program spiral;
 
 uses GL, GLUT, SpiralDrawer;
 
-const cWindowWidth: Integer = 640;
-      cWindowHeight: Integer = 480;
-      cPixelsPerUnit: Integer = 10;
+const cWindowWidth: Integer = 1280;
+      cWindowHeight: Integer = 720;
+      cPixelsPerUnit: Integer = 5;
 
 var iterations: Word;
 
