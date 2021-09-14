@@ -4,8 +4,7 @@ spiral is (or better: will be) a small program to draw a "nice" spiral.
 
 ## Build status
 
-[![Build Status](https://travis-ci.org/Thoronador/spiral.svg?branch=master)]
-(https://travis-ci.org/Thoronador/spiral)
+[![GitHub CI status](https://github.com/Thoronador/spiral/workflows/GitHub%20CI/badge.svg)](https://github.com/Thoronador/spiral/actions)
 
 ## Building from source
 
